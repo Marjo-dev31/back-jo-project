@@ -39,4 +39,10 @@ export class OfferController {
   remove(@Param('id') id: string) {
     return this.offerService.remove(+id);
   }
+
+  @Post('/upload')
+  createImg(@Body() formData: FormData) {
+    // upload file in a service or middleware
+    return formData;
+  }
 }

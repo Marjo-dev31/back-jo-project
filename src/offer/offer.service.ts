@@ -47,7 +47,7 @@ export class OfferService {
   }
 
   update(id: number, updateOfferDto: UpdateOfferDto) {
-    return `This action updates a #${id} offer`;
+    return `This action updates a #${id} offer and ${updateOfferDto.imgUrl}`;
   }
 
   remove(id: number) {

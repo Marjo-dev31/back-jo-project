@@ -42,4 +42,10 @@ export class SportingEventController {
   remove(@Param('id') id: string) {
     return this.sportingEventService.remove(+id);
   }
+
+  @Post('/upload')
+  createImg(@Body() formData: FormData) {
+    // upload file in a service or middleware
+    return formData;
+  }
 }

@@ -19,4 +19,8 @@ export class OfferEntity {
 
   @Column()
   imgUrl: string;
+
+  constructor(offer: Partial<OfferEntity>) {
+    Object.assign(this, offer);
+  }
 }

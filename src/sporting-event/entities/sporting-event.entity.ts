@@ -13,4 +13,8 @@ export class SportingEventEntity {
 
   @Column()
   imgUrl: string;
+
+  constructor(sportingEvent: Partial<SportingEventEntity>) {
+    Object.assign(this, sportingEvent);
+  }
 }

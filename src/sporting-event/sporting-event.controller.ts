@@ -27,7 +27,7 @@ export class SportingEventController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.sportingEventService.findOne(+id);
+    return this.sportingEventService.findOne(id);
   }
 
   @Patch(':id')
@@ -35,12 +35,12 @@ export class SportingEventController {
     @Param('id') id: string,
     @Body() updateSportingEventDto: UpdateSportingEventDto,
   ) {
-    return this.sportingEventService.update(+id, updateSportingEventDto);
+    return this.sportingEventService.update(id, updateSportingEventDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.sportingEventService.remove(+id);
+    return this.sportingEventService.remove(id);
   }
 
   @Post('/upload')

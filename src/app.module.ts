@@ -5,6 +5,7 @@ import { SportingEventModule } from './sporting-event/sporting-event.module';
 import { OfferModule } from './offer/offer.module';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ConfigModule } from '@nestjs/config';
     SportingEventModule,
     OfferModule,
     DatabaseModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

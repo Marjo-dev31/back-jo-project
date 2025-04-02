@@ -11,7 +11,7 @@ export class OfferEntity {
   @Column('text')
   description: string;
 
-  @Column('int')
+  @Column('float')
   price: number;
 
   @Column('int', { default: 0 })

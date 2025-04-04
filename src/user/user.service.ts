@@ -3,6 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Repository } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -29,6 +30,7 @@ export class UserService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
+    const hashPassword = await bcrypt.hash(updateUserDto.password, 10);
     await this.userRepository.update(
       { id },
       {
@@ -36,7 +38,7 @@ export class UserService {
         lastname: updateUserDto.lastname,
         email: updateUserDto.email,
         username: updateUserDto.username,
-        password: updateUserDto.password,
+        password: hashPassword,
       },
     );
     return await this.userRepository.findOne({

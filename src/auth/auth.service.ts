@@ -1,9 +1,10 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { loginUserDto } from 'src/user/dto/login-user.dto';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -12,12 +13,14 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  saltOrRounds: number = 10;
+
   async login(loginUser: loginUserDto) {
     const user = await this.userService.findOneByEmail(loginUser.email);
-    if (user?.password !== loginUser.password) {
-      throw new UnauthorizedException();
+    const isMatch = await bcrypt.compare(loginUser.password, user.password);
+    if (!isMatch) {
+      throw new BadRequestException('Email ou mot de passe invalide');
     }
-
     return { access_token: await this.createJwt(user), user };
   }
 
@@ -27,7 +30,12 @@ export class AuthService {
   }
 
   async signup(createUserDto: CreateUserDto) {
-    const user = await this.userService.create(createUserDto);
+    const hashPassword = await bcrypt.hash(
+      createUserDto.password,
+      this.saltOrRounds,
+    );
+    const data = { ...createUserDto, password: hashPassword };
+    const user = await this.userService.create(data);
     return { access_token: await this.createJwt(user), user };
   }
 }

@@ -26,6 +26,6 @@ export class UserEntity {
   @Column({ default: false })
   isAdmin: boolean;
 
-  @Column()
+  @Column({ default: 'privateKey' })
   privateKey: string;
 }

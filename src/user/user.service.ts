@@ -13,19 +13,23 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto) {
     const newUser = this.userRepository.create(createUserDto);
-    return this.userRepository.save(newUser);
+    return await this.userRepository.save(newUser);
   }
 
-  findAll() {
-    return this.userRepository.find();
+  async findAll() {
+    return await this.userRepository.find();
   }
 
-  findOne(id: string) {
-    return this.userRepository.findOne({ where: { id } });
+  async findOne(id: string) {
+    return await this.userRepository.findOne({ where: { id } });
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
-    return this.userRepository.update(
+  async findOneByEmail(email: string) {
+    return this.userRepository.findOneBy({ email: email });
+  }
+
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    await this.userRepository.update(
       { id },
       {
         firstname: updateUserDto.firstname,
@@ -35,9 +39,12 @@ export class UserService {
         password: updateUserDto.password,
       },
     );
+    return await this.userRepository.findOne({
+      where: { id: id },
+    });
   }
 
-  remove(id: string) {
-    return this.userRepository.delete({ id });
+  async remove(id: string) {
+    return await this.userRepository.delete({ id });
   }
 }

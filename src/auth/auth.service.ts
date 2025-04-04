@@ -1,5 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { loginUserDto } from 'src/user/dto/login-user.dto';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
@@ -23,5 +24,10 @@ export class AuthService {
   async createJwt(user: UserEntity) {
     const payload = { id: user.id, email: user.email };
     return await this.jwtService.signAsync(payload);
+  }
+
+  async signup(createUserDto: CreateUserDto) {
+    const user = await this.userService.create(createUserDto);
+    return { access_token: await this.createJwt(user), user };
   }
 }

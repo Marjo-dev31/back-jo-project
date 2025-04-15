@@ -1,16 +1,28 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { OrdersService } from './orders.service';
-import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
-import { cartDto, cartItemDto } from './dto/cartItem.dto';
+import { cartDto } from './dto/cartItem.dto';
+import { TicketsService } from 'src/tickets/tickets.service';
 
 @Controller('orders')
 export class OrdersController {
-  constructor(private readonly ordersService: OrdersService) {}
+  constructor(
+    private readonly ordersService: OrdersService,
+    private readonly ticketService: TicketsService,
+  ) {}
 
   @Post(':id')
-  create(@Param('id') userId: string, @Body() body: cartDto) {
-    return this.ordersService.create(body, userId);
+ async  create(@Param('id') userId: string, @Body() body: cartDto) {
+    const newOrder =  await this.ordersService.create(body, userId);
+    return this.ticketService.create(body.cart, newOrder.id)
   }
 
   @Get()

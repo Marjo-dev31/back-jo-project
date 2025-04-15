@@ -11,9 +11,9 @@ export class OrderEntity {
   @CreateDateColumn()
   createAt: Date
 
-
+//useridcolumn
   @Column()
   userId: string
 
-  //useridcolumn
+  
 }

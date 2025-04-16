@@ -22,8 +22,12 @@ export class OrdersService {
     return await this.orderRepository.save(newOrder);
   }
 
-  findAll() {
-    return `This action returns all orders`;
+  async findAll() {
+    return await this.orderRepository.find();
+  }
+
+  findByUser(id: string){
+    return this.orderRepository.findBy({id: id})
   }
 
   findOne(id: number) {

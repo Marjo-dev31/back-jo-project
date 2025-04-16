@@ -1,5 +1,6 @@
 import { IsEmail, Min } from 'class-validator';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { OrderEntity } from 'src/orders/entities/order.entity';
+import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class UserEntity {
@@ -28,4 +29,8 @@ export class UserEntity {
 
   @Column({ default: 'privateKey' })
   privateKey: string;
+
+  @OneToMany(()=> OrderEntity, (order)=>order.user)
+  orders: OrderEntity[]
+
 }

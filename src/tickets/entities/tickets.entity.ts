@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { OrderEntity } from "src/orders/entities/order.entity";
+import { orderProviders } from "src/orders/ticket.provider";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class TicketEntity {
@@ -6,12 +8,12 @@ export class TicketEntity {
   id :string
 
   @Column()
-  orderId: string
-
-  @Column()
   offerId: string
 
   @Column()
   sportingEventId: string
 
+  @ManyToOne(()=> OrderEntity, (order) => order.tickets)
+  @JoinColumn({name: 'orderId'})
+  order: OrderEntity
 }

@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { TicketEntity } from 'src/tickets/entities/tickets.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class SportingEventEntity {
@@ -14,7 +21,6 @@ export class SportingEventEntity {
   @Column()
   imgUrl: string;
 
-  constructor(sportingEvent: Partial<SportingEventEntity>) {
-    Object.assign(this, sportingEvent);
-  }
+  @OneToMany(() => TicketEntity, (ticket) => ticket.sportingEvent)
+  tickets: TicketEntity[];
 }

@@ -1,5 +1,6 @@
+import { OfferEntity } from "src/offer/entities/offer.entity";
 import { OrderEntity } from "src/orders/entities/order.entity";
-import { orderProviders } from "src/orders/order.provider";
+import { SportingEventEntity } from "src/sporting-event/entities/sporting-event.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -7,13 +8,18 @@ export class TicketEntity {
   @PrimaryGeneratedColumn('uuid')
   id :string
 
-  @Column()
-  offerId: string
+  @ManyToOne(()=> OfferEntity, (offer)=> offer.tickets)
+  @JoinColumn({name: 'offerId'})
+  offer: OfferEntity
 
-  @Column()
-  sportingEventId: string
+  @ManyToOne(()=>SportingEventEntity, (sportingEvent)=> sportingEvent.tickets)
+  @JoinColumn({name:' sportingEventId'})
+  sportingEvent: SportingEventEntity
 
   @ManyToOne(()=> OrderEntity, (order) => order.tickets)
   @JoinColumn({name: 'orderId'})
   order: OrderEntity
+
+  @Column()
+  ticketKey: string
 }

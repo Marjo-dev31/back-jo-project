@@ -16,8 +16,8 @@ export class OrdersService {
     const total = cart.reduce((acc, cur) => acc + cur.total, 0);
     const order: CreateOrderDto = {
       total: total,
-      userId: userId
-    } 
+      userId: userId,
+    };
     const newOrder = this.orderRepository.create(order);
     return await this.orderRepository.save(newOrder);
   }
@@ -26,19 +26,22 @@ export class OrdersService {
     return await this.orderRepository.find();
   }
 
-  findByUser(id: string){
-    return this.orderRepository.findBy({id: id})
+  findByUser(id: string) {
+    return this.orderRepository.find({
+      relations: { user: true },
+      where: { user: { id: id } },
+    });
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} order`;
   }
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
+  update(id: string, updateOrderDto: UpdateOrderDto) {
     return `This action updates a #${id} order`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} order`;
   }
 }

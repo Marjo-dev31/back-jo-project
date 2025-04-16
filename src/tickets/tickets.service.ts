@@ -9,7 +9,6 @@ export class TicketsService {
   constructor(
     @Inject('TICKET_REPOSITORY')
     private ticketRepository: Repository<TicketEntity>,
-    // private orderService: OrdersService
   ) {}
 
   async findAll() {
@@ -41,6 +40,7 @@ return response
             orderId: newOrderId,
             offerId: element.offerId,
             sportingEventId: element.sportingEventId,
+            ticketKey: ''
           };
           const newTicket = await this.ticketRepository.create(ticket);
           const tickets = await this.ticketRepository.save(newTicket);

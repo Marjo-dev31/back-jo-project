@@ -1,5 +1,5 @@
 import { OrderEntity } from "src/orders/entities/order.entity";
-import { orderProviders } from "src/orders/ticket.provider";
+import { orderProviders } from "src/orders/order.provider";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()

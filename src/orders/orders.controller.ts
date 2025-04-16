@@ -11,18 +11,22 @@ import { OrdersService } from './orders.service';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { cartDto } from './dto/cartItem.dto';
 import { TicketsService } from 'src/tickets/tickets.service';
+import { OfferService } from 'src/offer/offer.service';
 
 @Controller('orders')
 export class OrdersController {
   constructor(
     private readonly ordersService: OrdersService,
     private readonly ticketService: TicketsService,
+    private readonly offerService: OfferService,
   ) {}
 
   @Post(':id')
- async  create(@Param('id') userId: string, @Body() body: cartDto) {
-    const newOrder =  await this.ordersService.create(body, userId);
-    return this.ticketService.create(body.cart, newOrder.id)
+  async create(@Param('id') userId: string, @Body() body: cartDto) {
+    const newOrder = await this.ordersService.create(body.cart, userId);
+    const updateOffer = await this.offerService.updateNumberOfSales(body.cart);
+    const newTickets = this.ticketService.create(body.cart, newOrder.id);
+    return updateOffer
   }
 
   @Get()

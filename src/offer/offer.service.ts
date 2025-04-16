@@ -3,6 +3,7 @@ import { CreateOfferDto } from './dto/create-offer.dto';
 import { UpdateOfferDto } from './dto/update-offer.dto';
 import { Repository } from 'typeorm';
 import { OfferEntity } from './entities/offer.entity';
+import { cartItemDto } from 'src/orders/dto/cartItem.dto';
 
 @Injectable()
 export class OfferService {
@@ -34,6 +35,17 @@ export class OfferService {
         imgUrl: updateOfferDto.imgUrl,
       },
     );
+  }
+
+  async updateNumberOfSales(cart: cartItemDto[]) {
+   const response = await Promise.all(cart.map(async (cartItem) =>
+    await this.offerRepository.increment(
+        { id: cartItem.offerId },
+        'numberOfSales',
+        cartItem.quantity,
+      ),
+    ))
+    return response
   }
 
   async remove(id: string) {

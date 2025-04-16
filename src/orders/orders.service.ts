@@ -12,8 +12,8 @@ export class OrdersService {
     private orderRepository: Repository<OrderEntity>,
   ) {}
 
-  async create(body: cartDto, userId: string) {
-    const total = body.cart.reduce((acc, cur) => acc + cur.total, 0);
+  async create(cart: cartItemDto[], userId: string) {
+    const total = cart.reduce((acc, cur) => acc + cur.total, 0);
     const order: CreateOrderDto = {
       total: total,
       userId: userId

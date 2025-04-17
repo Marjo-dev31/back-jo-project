@@ -27,7 +27,7 @@ export class UserEntity {
   @Column({ default: false })
   isAdmin: boolean;
 
-  @Column({ default: 'privateKey' })
+  @Column()
   privateKey: string;
 
   @OneToMany(()=> OrderEntity, (order)=>order.user, {onDelete: 'SET NULL'})

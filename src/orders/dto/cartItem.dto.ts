@@ -9,6 +9,3 @@ export class cartItemDto {
   total: number;
 }
 
-export class cartDto {
-  cart: cartItemDto[]
-}

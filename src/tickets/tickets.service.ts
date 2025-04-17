@@ -38,7 +38,7 @@ return response
       cart.map(async (element: cartItemDto) => {
         for (let i = 0; i < element.quantity; i++) {
           const ticketKey = await this.generateTicketKey()
-          const ticket = {
+          const ticket: CreateTicketDto = {
             offer: {id: element.offerId},
             sportingEvent: {id: element.sportingEventId},
             order: {id: newOrderId},

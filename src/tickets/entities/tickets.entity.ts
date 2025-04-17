@@ -8,15 +8,15 @@ export class TicketEntity {
   @PrimaryGeneratedColumn('uuid')
   id :string
 
-  @ManyToOne(()=> OfferEntity, (offer)=> offer.tickets, {cascade: true})
+  @ManyToOne(()=> OfferEntity, (offer)=> offer.tickets, {onDelete: "SET NULL"})
   @JoinColumn({name: 'offerId'})
   offer: OfferEntity
 
-  @ManyToOne(()=>SportingEventEntity, (sportingEvent)=> sportingEvent.tickets, {cascade: true})
+  @ManyToOne(()=>SportingEventEntity, (sportingEvent)=> sportingEvent.tickets, {onDelete: "SET NULL"})
   @JoinColumn({name:' sportingEventId'})
   sportingEvent: SportingEventEntity
 
-  @ManyToOne(()=> OrderEntity, (order) => order.tickets, {cascade: true})
+  @ManyToOne(()=> OrderEntity, (order) => order.tickets, {onDelete: "SET NULL"})
   @JoinColumn({name: 'orderId'})
   order: OrderEntity
 

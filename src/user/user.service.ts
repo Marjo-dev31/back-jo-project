@@ -22,7 +22,7 @@ export class UserService {
   }
 
   async findOne(id: string) {
-    return await this.userRepository.findOne({ where: { id } });
+    return await this.userRepository.findOne({ where: { id }, relations: {orders: true} });
   }
 
   async findOneByEmail(email: string) {

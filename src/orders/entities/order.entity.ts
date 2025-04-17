@@ -13,8 +13,7 @@ export class OrderEntity {
   @CreateDateColumn()
   createAt: Date
 
-//useridcolumn
-  @ManyToOne(()=> UserEntity, (user)=> user.id)
+  @ManyToOne(()=> UserEntity, (user)=> user.id, {onDelete: "SET NULL"})
   @JoinColumn({name: 'userId'})
   user: UserEntity
 

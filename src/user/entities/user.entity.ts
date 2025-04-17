@@ -30,7 +30,7 @@ export class UserEntity {
   @Column({ default: 'privateKey' })
   privateKey: string;
 
-  @OneToMany(()=> OrderEntity, (order)=>order.user)
+  @OneToMany(()=> OrderEntity, (order)=>order.user, {onDelete: 'SET NULL'})
   orders: OrderEntity[]
 
 }

@@ -1,6 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
-import { get } from 'http';
 
 @Controller('tickets')
 export class TicketsController {

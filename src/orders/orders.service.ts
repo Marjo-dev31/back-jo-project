@@ -3,7 +3,7 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { Repository } from 'typeorm';
 import { OrderEntity } from './entities/order.entity';
-import { cartDto, cartItemDto } from './dto/cartItem.dto';
+import { cartItemDto } from './dto/cartItem.dto';
 
 @Injectable()
 export class OrdersService {
@@ -16,7 +16,7 @@ export class OrdersService {
     const total = cart.reduce((acc, cur) => acc + cur.total, 0);
     const order: CreateOrderDto = {
       total: total,
-      userId: userId,
+      user: {id: userId},
     };
     const newOrder = this.orderRepository.create(order);
     return await this.orderRepository.save(newOrder);

@@ -21,6 +21,8 @@ export class TicketsService {
       relations: {
         order: {
           user: true},
+        offer: true,
+        sportingEvent: true
       },
       where: {
         order : {

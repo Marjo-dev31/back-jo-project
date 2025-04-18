@@ -7,12 +7,17 @@ import {
   Param,
   Delete,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
+  Res,
 } from '@nestjs/common';
 import { OfferService } from './offer.service';
 import { CreateOfferDto } from './dto/create-offer.dto';
 import { UpdateOfferDto } from './dto/update-offer.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { IsAdminGuard } from 'src/user/isAdmin.guard';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { multerOptions } from 'src/upload/multer-options';
 
 @Controller('offer')
 export class OfferController {
@@ -47,9 +52,14 @@ export class OfferController {
   }
 
   @UseGuards(AuthGuard, IsAdminGuard)
-  @Post('/upload')
-  createImg(@Body() formData: FormData) {
-    // upload file in a service or middleware
-    return formData;
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file', multerOptions))
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
+    console.log(file, 'file uploaded') ;
+  }
+
+  @Get('upload/:id')
+  getFile(@Param('id') id:string, @Res() res){
+    res.sendFile(id, {root: './uploads'})
   }
 }

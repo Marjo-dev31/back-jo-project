@@ -7,12 +7,16 @@ import {
   Param,
   Delete,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
+  Res,
 } from '@nestjs/common';
 import { SportingEventService } from './sporting-event.service';
 import { CreateSportingEventDto } from './dto/create-sporting-event.dto';
 import { UpdateSportingEventDto } from './dto/update-sporting-event.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { IsAdminGuard } from 'src/user/isAdmin.guard';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('sporting-event')
 export class SportingEventController {
@@ -50,9 +54,14 @@ export class SportingEventController {
   }
 
   @UseGuards(AuthGuard, IsAdminGuard)
-  @Post('/upload')
-  createImg(@Body() formData: FormData) {
-    // upload file in a service or middleware
-    return formData;
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
+    console.log(file, 'file uploaded')
   }
+
+  @Get('upload/:id')
+    getFile(@Param('id') id:string, @Res() res){
+      res.sendFile(id, {root: './uploads'})
+    }
 }

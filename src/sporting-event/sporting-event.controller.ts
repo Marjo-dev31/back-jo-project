@@ -57,11 +57,11 @@ export class SportingEventController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(@UploadedFile() file: Express.Multer.File) {
-    console.log(file, 'file uploaded')
+    console.log(file, 'file uploaded');
   }
 
   @Get('upload/:id')
-    getFile(@Param('id') id:string, @Res() res){
-      res.sendFile(id, {root: './uploads'})
-    }
+  getFile(@Param('id') id: string, @Res() res) {
+    res.sendFile(id, { root: './uploads' });
+  }
 }

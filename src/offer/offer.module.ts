@@ -10,7 +10,7 @@ import { MulterModule } from '@nestjs/platform-express';
   imports: [
     DatabaseModule,
     MulterModule.register({
-      dest: './uploads'
+      dest: './uploads',
     }),
   ],
   controllers: [OfferController],

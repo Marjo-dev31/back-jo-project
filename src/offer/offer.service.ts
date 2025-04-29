@@ -38,14 +38,17 @@ export class OfferService {
   }
 
   async updateNumberOfSales(cart: cartItemDto[]) {
-   const response = await Promise.all(cart.map(async (cartItem) =>
-    await this.offerRepository.increment(
-        { id: cartItem.offerId },
-        'numberOfSales',
-        cartItem.quantity,
+    const response = await Promise.all(
+      cart.map(
+        async (cartItem) =>
+          await this.offerRepository.increment(
+            { id: cartItem.offerId },
+            'numberOfSales',
+            cartItem.quantity,
+          ),
       ),
-    ))
-    return response
+    );
+    return response;
   }
 
   async remove(id: string) {

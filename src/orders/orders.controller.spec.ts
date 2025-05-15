@@ -1,14 +1,30 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
+import { TicketsService } from '../tickets/tickets.service';
+import { OfferService } from '../offer/offer.service';
 
 describe('OrdersController', () => {
   let controller: OrdersController;
 
+  const mockOrderRepository = {
+    create: jest.fn(),
+    findAll: jest.fn(),
+    findByUser: jest.fn(),
+  };
+
+  let mockTicketsService: Partial<TicketsService>;
+  let mockOfferService: Partial<OfferService>;
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [OrdersController],
-      providers: [OrdersService],
+      providers: [
+        OrdersService,
+        { provide: 'ORDER_REPOSITORY', useValue: mockOrderRepository },
+        { provide: TicketsService, useValue: mockTicketsService },
+        { provide: OfferService, useValue: mockOfferService },
+      ],
     }).compile();
 
     controller = module.get<OrdersController>(OrdersController);

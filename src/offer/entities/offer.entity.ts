@@ -1,4 +1,4 @@
-import { TicketEntity } from 'src/tickets/entities/tickets.entity';
+import { TicketEntity } from '../../tickets/entities/tickets.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -21,6 +21,6 @@ export class OfferEntity {
   @Column()
   imgUrl: string;
 
-  @OneToMany(()=>TicketEntity, (ticket)=> ticket.offer)
-  tickets: TicketEntity[] 
+  @OneToMany(() => TicketEntity, (ticket) => ticket.offer)
+  tickets: TicketEntity[];
 }

@@ -4,9 +4,18 @@ import { OrdersService } from './orders.service';
 describe('OrdersService', () => {
   let service: OrdersService;
 
+  const mockOrderRepository = {
+    create: jest.fn(),
+    findAll: jest.fn(),
+    findByUser: jest.fn(),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [OrdersService],
+      providers: [
+        OrdersService,
+        { provide: 'ORDER_REPOSITORY', useValue: mockOrderRepository },
+      ],
     }).compile();
 
     service = module.get<OrdersService>(OrdersService);

@@ -14,8 +14,8 @@ import {
 import { SportingEventService } from './sporting-event.service';
 import { CreateSportingEventDto } from './dto/create-sporting-event.dto';
 import { UpdateSportingEventDto } from './dto/update-sporting-event.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { IsAdminGuard } from 'src/user/isAdmin.guard';
+import { AuthGuard } from '../auth/auth.guard';
+import { IsAdminGuard } from '../user/isAdmin.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('sporting-event')

@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { TicketEntity } from './entities/tickets.entity';
-import { cartItemDto } from 'src/orders/dto/cartItem.dto';
+import { cartItemDto } from '../orders/dto/cartItem.dto';
 import * as bcrypt from 'bcrypt';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 

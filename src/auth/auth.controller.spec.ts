@@ -1,59 +1,27 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-// import { UserModule } from 'src/user/user.module';
-// import { UserService } from 'src/user/user.service';
-
-// describe('AuthController', () => {
-//   let controller: AuthController;
-//   let mockAuthService: AuthService;
-//   let mockUserService: UserService;
-
-//   beforeEach(async () => {
-//     const module: TestingModule = await Test.createTestingModule({
-//       imports: [UserModule],
-//       providers: [
-//         { provide: AuthService, useValue: mockAuthService },
-//         { provide: UserService, useValue: mockUserService },
-//       ],
-//       controllers: [AuthController],
-//     }).compile();
-
-//     controller = module.get<AuthController>(AuthController);
-//   });
-
-//   it('should be defined', () => {
-//     expect(controller).toBeDefined();
-//   });
-// });
-
-import { CreateUserDto } from 'src/user/dto/create-user.dto';
-import { loginUserDto } from 'src/user/dto/login-user.dto';
-import { UserService } from 'src/user/user.service';
-import { UserEntity } from 'src/user/entities/user.entity';
-import { UserModule } from 'src/user/user.module';
+import { CreateUserDto } from '../user/dto/create-user.dto';
+import { loginUserDto } from '../user/dto/login-user.dto';
+import { UserService } from '../user/user.service';
 
 describe('AuthController', () => {
   let authController: AuthController;
   let authService: AuthService;
-  let userService: UserService;
+  let userService: Partial<UserService>;
 
   const mockAuthService = {
     login: jest.fn(),
     signup: jest.fn(),
   };
 
-  const mockUserService = {
-    findOneyEmail: jest.fn(),
-  };
-
   beforeEach(async () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
-      imports: [UserModule],
+      imports: [],
       controllers: [AuthController],
       providers: [
         { provide: AuthService, useValue: mockAuthService },
-        { provide: UserService, useValue: mockUserService },
+        { provide: UserService, useValue: userService as UserService },
       ],
     }).compile();
 

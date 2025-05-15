@@ -3,7 +3,7 @@ import { CreateOfferDto } from './dto/create-offer.dto';
 import { UpdateOfferDto } from './dto/update-offer.dto';
 import { Repository } from 'typeorm';
 import { OfferEntity } from './entities/offer.entity';
-import { cartItemDto } from 'src/orders/dto/cartItem.dto';
+import { cartItemDto } from '../orders/dto/cartItem.dto';
 
 @Injectable()
 export class OfferService {

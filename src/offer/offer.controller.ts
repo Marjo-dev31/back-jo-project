@@ -14,10 +14,10 @@ import {
 import { OfferService } from './offer.service';
 import { CreateOfferDto } from './dto/create-offer.dto';
 import { UpdateOfferDto } from './dto/update-offer.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { IsAdminGuard } from 'src/user/isAdmin.guard';
+import { AuthGuard } from '../auth/auth.guard';
+import { IsAdminGuard } from '../user/isAdmin.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { multerOptions } from 'src/upload/multer-options';
+import { multerOptions } from '../upload/multer-options';
 
 @Controller('offer')
 export class OfferController {

@@ -10,8 +10,8 @@ import {
 import { OrdersService } from './orders.service';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { cartItemDto } from './dto/cartItem.dto';
-import { TicketsService } from 'src/tickets/tickets.service';
-import { OfferService } from 'src/offer/offer.service';
+import { TicketsService } from '../tickets/tickets.service';
+import { OfferService } from '../offer/offer.service';
 
 @Controller('orders')
 export class OrdersController {

@@ -10,6 +10,9 @@ import {
   UseInterceptors,
   UploadedFile,
   Res,
+  ParseFilePipe,
+  MaxFileSizeValidator,
+  FileTypeValidator,
 } from '@nestjs/common';
 import { OfferService } from './offer.service';
 import { CreateOfferDto } from './dto/create-offer.dto';
@@ -54,7 +57,19 @@ export class OfferController {
   @UseGuards(AuthGuard, IsAdminGuard)
   @Post('upload')
   @UseInterceptors(FileInterceptor('file', multerOptions))
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
+  uploadFile(
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 1000 }),
+          new FileTypeValidator({ fileType: '.(png|jpeg|jpg|webp)' }),
+        ],
+      }),
+    )
+    file: Express.Multer.File,
+    @Res() res,
+  ) {
+    res.status(200);
     console.log(file, 'file uploaded');
   }
 

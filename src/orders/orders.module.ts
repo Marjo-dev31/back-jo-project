@@ -11,6 +11,13 @@ import { offerProviders } from '../offer/offer.providers';
 @Module({
   imports: [DatabaseModule],
   controllers: [OrdersController],
-  providers: [...orderProviders, ...ticketProviders, ...offerProviders, OfferService, OrdersService, TicketsService],
+  providers: [
+    ...orderProviders,
+    ...ticketProviders,
+    ...offerProviders,
+    OfferService,
+    OrdersService,
+    TicketsService,
+  ],
 })
 export class OrdersModule {}

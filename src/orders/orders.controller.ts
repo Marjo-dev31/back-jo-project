@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { cartItemDto } from './dto/cartItem.dto';
 import { TicketsService } from '../tickets/tickets.service';
 import { OfferService } from '../offer/offer.service';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('orders')
 export class OrdersController {
@@ -12,6 +13,7 @@ export class OrdersController {
     private readonly offerService: OfferService,
   ) {}
 
+  @UseGuards(AuthGuard)
   @Post(':id')
   async create(@Param('id') userId: string, @Body() cart: cartItemDto[]) {
     const newOrder = await this.ordersService.create(cart, userId);
@@ -27,6 +29,7 @@ export class OrdersController {
     return this.ordersService.findAll();
   }
 
+  @UseGuards(AuthGuard)
   @Get('user/:id')
   findByUser(@Param('id') userId: string) {
     return this.ordersService.findByUser(userId);

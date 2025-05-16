@@ -3,9 +3,16 @@ import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
 import { TicketsService } from '../tickets/tickets.service';
 import { OfferService } from '../offer/offer.service';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 describe('OrdersController', () => {
   let controller: OrdersController;
+  let mockJwtService: Partial<JwtService>;
+
+  const mockConfigService: Partial<ConfigService> = {
+    get: jest.fn(),
+  };
 
   const mockOrderRepository = {
     create: jest.fn(),
@@ -24,6 +31,11 @@ describe('OrdersController', () => {
         { provide: 'ORDER_REPOSITORY', useValue: mockOrderRepository },
         { provide: TicketsService, useValue: mockTicketsService },
         { provide: OfferService, useValue: mockOfferService },
+        { provide: JwtService, useValue: mockJwtService as JwtService },
+        {
+          provide: ConfigService,
+          useValue: mockConfigService as ConfigService,
+        },
       ],
     }).compile();
 

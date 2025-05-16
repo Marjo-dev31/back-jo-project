@@ -20,31 +20,31 @@ export class TicketsService {
     const response = await this.ticketRepository.find({
       relations: {
         order: {
-          user: true},
+          user: true,
+        },
         offer: true,
-        sportingEvent: true
+        sportingEvent: true,
       },
       where: {
-        order : {
-          user: {id : id}
-        }
-      }
-    }
-    )
-return response
+        order: {
+          user: { id: id },
+        },
+      },
+    });
+    return response;
   }
 
   async create(cart: cartItemDto[], newOrderId: string) {
-    let ticketsArray = [];
+    const ticketsArray = [];
     await Promise.all(
       cart.map(async (element: cartItemDto) => {
         for (let i = 0; i < element.quantity; i++) {
-          const ticketKey = await this.generateTicketKey()
+          const ticketKey = await this.generateTicketKey();
           const ticket: CreateTicketDto = {
-            offer: {id: element.offerId},
-            sportingEvent: {id: element.sportingEventId},
-            order: {id: newOrderId},
-            ticketKey: ticketKey
+            offer: { id: element.offerId },
+            sportingEvent: { id: element.sportingEventId },
+            order: { id: newOrderId },
+            ticketKey: ticketKey,
           };
           const newTicket = await this.ticketRepository.create(ticket);
           const tickets = await this.ticketRepository.save(newTicket);
@@ -55,10 +55,10 @@ return response
     return ticketsArray;
   }
 
-  async generateTicketKey(){
-   const dateTime = new Date()
-   const hours =  dateTime.getHours().toString()
-   const key = await bcrypt.hash(hours, 10)
-   return key
+  async generateTicketKey() {
+    const dateTime = new Date();
+    const hours = dateTime.getHours().toString();
+    const key = await bcrypt.hash(hours, 10);
+    return key;
   }
 }

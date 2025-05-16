@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { loginUserDto } from '../user/dto/login-user.dto';
@@ -32,6 +36,9 @@ export class AuthService {
 
   async signup(createUserDto: CreateUserDto) {
     const user = await this.userService.create(createUserDto);
+    if (!user) {
+      throw new BadRequestException();
+    }
     return { access_token: await this.createJwt(user), user };
   }
 }

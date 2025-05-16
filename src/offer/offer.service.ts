@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { CreateOfferDto } from './dto/create-offer.dto';
 import { UpdateOfferDto } from './dto/update-offer.dto';
 import { Repository } from 'typeorm';
@@ -14,6 +14,9 @@ export class OfferService {
 
   async create(createOfferDto: CreateOfferDto) {
     const newOffer = this.offerRepository.create(createOfferDto);
+    if (!newOffer) {
+      throw new BadRequestException();
+    }
     return await this.offerRepository.save(newOffer);
   }
 

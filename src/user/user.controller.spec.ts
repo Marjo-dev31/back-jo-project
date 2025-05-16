@@ -3,6 +3,8 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { MailerService } from '@nestjs-modules/mailer';
+import { MailService } from './mail/mail.service';
 
 describe('UserController', () => {
   let controller: UserController;
@@ -10,9 +12,14 @@ describe('UserController', () => {
   const mockUserRepository = {};
 
   let mockJwtService: Partial<JwtService>;
+  let mockMailerService: MailerService;
 
   const mockConfigService: Partial<ConfigService> = {
     get: jest.fn(),
+  };
+
+  const mockMailService = {
+    sendMail: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -27,6 +34,8 @@ describe('UserController', () => {
           provide: ConfigService,
           useValue: mockConfigService as ConfigService,
         },
+        { provide: MailService, useValue: mockMailService },
+        { provide: MailerService, useValue: mockMailerService },
       ],
     }).compile();
 

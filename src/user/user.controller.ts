@@ -12,13 +12,18 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard } from '../auth/auth.guard';
+import { MailService } from './mail/mail.service';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly mailservice: MailService,
+  ) {}
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
+    this.mailservice.sendMail(createUserDto);
     return this.userService.create(createUserDto);
   }
 

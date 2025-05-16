@@ -7,6 +7,7 @@ import { TicketsService } from '../tickets/tickets.service';
 import { ticketProviders } from '../tickets/ticket.provider';
 import { OfferService } from '../offer/offer.service';
 import { offerProviders } from '../offer/offer.providers';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [DatabaseModule],
@@ -18,6 +19,7 @@ import { offerProviders } from '../offer/offer.providers';
     OfferService,
     OrdersService,
     TicketsService,
+    JwtService,
   ],
 })
 export class OrdersModule {}

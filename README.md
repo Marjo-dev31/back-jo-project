@@ -26,8 +26,71 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Prerequisites globally
+
+"dependencies": {
+    "@nestjs-modules/mailer": "^2.0.2",
+    "@nestjs/common": "^10.0.0",
+    "@nestjs/config": "^4.0.2",
+    "@nestjs/core": "^10.0.0",
+    "@nestjs/jwt": "^11.0.0",
+    "@nestjs/mapped-types": "*",
+    "@nestjs/platform-express": "^10.0.0",
+    "@types/bcrypt": "^5.0.2",
+    "bcrypt": "^5.1.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "mysql2": "^3.14.0",
+    "nodemailer": "^7.0.3",
+    "reflect-metadata": "^0.2.0",
+    "rxjs": "^7.8.1",
+    "typeorm": "^0.3.21"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^10.4.9",
+    "@nestjs/schematics": "^10.0.0",
+    "@nestjs/testing": "^10.4.17",
+    "@types/express": "^5.0.0",
+    "@types/jest": "^29.5.2",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^20.3.1",
+    "@types/nodemailer": "^6.4.17",
+    "@types/supertest": "^6.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "jest": "^29.5.0",
+    "prettier": "^3.0.0",
+    "source-map-support": "^0.5.21",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.1.0",
+    "ts-loader": "^9.4.3",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.1.3"
+  },
+
+## Create directory and clone repository
+
+mkdir <directoryNameToChoose>
+install git
+git clone git@github.com:Marjo-dev31/back-jo-project.git
+
 ## Project setup
 
+### env file 
+
+NODE_ENV=
+MYSQL_DATABASE=
+MYSQL_HOST=
+MYSQL_PORT=
+MYSQL_USERNAME=
+MYSQL_PASSWORD=
+SECRET_TOKEN=
+
+### install
 ```bash
 $ npm install
 ```
@@ -57,6 +120,8 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+
 
 ## Deployment
 

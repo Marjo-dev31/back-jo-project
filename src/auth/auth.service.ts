@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { loginUserDto } from '../user/dto/login-user.dto';
@@ -13,13 +13,14 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  saltOrRounds: number = 10;
-
   async login(loginUser: loginUserDto) {
     const user = await this.userService.findOneByEmail(loginUser.email);
+    if (!user) {
+      throw new NotFoundException('Email ou mot de passe invalide');
+    }
     const isMatch = await bcrypt.compare(loginUser.password, user.password);
     if (!isMatch) {
-      throw new BadRequestException('Email ou mot de passe invalide');
+      throw new NotFoundException('Email ou mot de passe invalide');
     }
     return { access_token: await this.createJwt(user), user };
   }
@@ -30,12 +31,7 @@ export class AuthService {
   }
 
   async signup(createUserDto: CreateUserDto) {
-    const hashPassword = await bcrypt.hash(
-      createUserDto.password,
-      this.saltOrRounds,
-    );
-    const data = { ...createUserDto, password: hashPassword };
-    const user = await this.userService.create(data);
+    const user = await this.userService.create(createUserDto);
     return { access_token: await this.createJwt(user), user };
   }
 }

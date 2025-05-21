@@ -6,17 +6,24 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { AuthGuard } from '../auth/auth.guard';
+import { MailService } from './mail/mail.service';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly mailservice: MailService,
+  ) {}
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
+    this.mailservice.sendMail(createUserDto);
     return this.userService.create(createUserDto);
   }
 
@@ -30,6 +37,7 @@ export class UserController {
     return this.userService.findOne(id);
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(id, updateUserDto);

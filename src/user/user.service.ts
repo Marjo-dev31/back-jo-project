@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Repository } from 'typeorm';
@@ -13,10 +13,19 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const privateKey = await bcrypt.hash(createUserDto.username, 10);
-    const secureUser = { ...createUserDto, privateKey: privateKey };
-    const newUser = this.userRepository.create(secureUser);
-    return await this.userRepository.save(newUser);
+    try {
+      const privateKey = await bcrypt.hash(createUserDto.username, 10);
+      const hashPassword = await bcrypt.hash(createUserDto.password, 10);
+      const secureUser = {
+        ...createUserDto,
+        password: hashPassword,
+        privateKey: privateKey,
+      };
+      const newUser = this.userRepository.create(secureUser);
+      return await this.userRepository.save(newUser);
+    } catch {
+      throw new BadRequestException();
+    }
   }
 
   async findAll() {

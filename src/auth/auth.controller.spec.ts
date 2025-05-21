@@ -4,15 +4,23 @@ import { AuthService } from './auth.service';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { loginUserDto } from '../user/dto/login-user.dto';
 import { UserService } from '../user/user.service';
+import { MailerService } from '@nestjs-modules/mailer';
+import { MailService } from '../user/mail/mail.service';
 
 describe('AuthController', () => {
   let authController: AuthController;
   let authService: AuthService;
   let userService: Partial<UserService>;
 
+  let mailerService: MailerService;
+
   const mockAuthService = {
     login: jest.fn(),
     signup: jest.fn(),
+  };
+
+  const mockMailService = {
+    sendMail: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -21,6 +29,8 @@ describe('AuthController', () => {
       controllers: [AuthController],
       providers: [
         { provide: AuthService, useValue: mockAuthService },
+        { provide: MailerService, useValue: mailerService },
+        { provide: MailService, useValue: mockMailService },
         { provide: UserService, useValue: userService as UserService },
       ],
     }).compile();

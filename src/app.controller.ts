@@ -9,14 +9,4 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
-
-  // @Get('/sendmail')
-  // sendMailer(@Res() response: any) {
-  //   const mail = this.appService.sendMail();
-
-  //   return response.status(200).json({
-  //     message: 'success',
-  //     mail,
-  //   });
-  // }
 }

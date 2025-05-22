@@ -9,6 +9,7 @@ export const fetchSecrets = async (secretName: string) => {
   if (NODEENV === 'production') {
     const client = new SecretsManagerClient({
       region: 'eu-west-3',
+      profile: 'projectperso',
     });
     try {
       const response = await client.send(

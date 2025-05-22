@@ -5,16 +5,17 @@ export const databaseProviders = [
   {
     provide: 'DATA_SOURCE',
     useFactory: async (configService: ConfigService) => {
+      const secrets = configService.get('database');
       const dataSource = new DataSource({
         type: 'mysql',
-        host: configService.getOrThrow('MYSQL_HOST'),
-        port: configService.getOrThrow('MYSQL_PORT'),
-        username: configService.getOrThrow('MYSQL_USERNAME'),
-        password: configService.getOrThrow('MYSQL_PASSWORD'),
-        database: configService.getOrThrow('MYSQL_DATABASE'),
+        host: secrets.host,
+        port: secrets.port,
+        username: secrets.user,
+        password: secrets.password,
+        database: secrets.name,
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
         // make sure is false in production
-        synchronize: true,
+        synchronize: false,
       });
 
       return dataSource.initialize();

@@ -3,10 +3,10 @@ import {
   GetSecretValueCommand,
 } from '@aws-sdk/client-secrets-manager';
 
-const NODEENV = process.env.NODE_ENV;
+const ISPRODUCTION = true;
 
 export const fetchSecrets = async (secretName: string) => {
-  if (NODEENV === 'production') {
+  if (ISPRODUCTION) {
     const client = new SecretsManagerClient({
       region: 'eu-west-3',
       profile: 'projectperso',

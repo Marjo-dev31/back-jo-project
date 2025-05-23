@@ -11,5 +11,6 @@ export default async () => {
       password: secrets.MYSQL_PASSWORD,
       user: secrets.MYSQL_USERNAME,
     },
+    secret_token: secrets.SECRET_TOKEN,
   };
 };
